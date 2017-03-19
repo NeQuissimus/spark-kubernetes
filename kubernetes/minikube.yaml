@@ -43,6 +43,7 @@ apiVersion: v1
 metadata:
   name: spark-webui
 spec:
+  type: NodePort
   ports:
     - port: 8080
       targetPort: 8080

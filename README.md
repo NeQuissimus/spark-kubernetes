@@ -2,7 +2,7 @@
 
 Deploy Spark on Kubernetes
 
-* Spark 2.0.1
+* Spark 2.1.0
 * Hadoop 2.7.3
 
 ## Kubernetes
@@ -22,6 +22,19 @@ kubectl proxy --port=8001
 ```
 
 At which point the UI will be available at [http://localhost:8001/api/v1/proxy/namespaces/spark-cluster/services/spark-webui/](http://localhost:8001/api/v1/proxy/namespaces/spark-cluster/services/spark-webui/)
+
+## Minikube
+
+The minikube deployment is different in that it required the Web UI service to use a NodePort
+
+```
+minikube start
+kubectl create -f kubernetes/namespace-spark.yaml
+kubectl --namespace spark-cluster create -f kubernetes/minikube.yaml
+minikube service spark-webui --namespace spark-cluster
+```
+
+This will open a browser window with the Spark UI
 
 ### Example
 
@@ -46,22 +59,20 @@ word_counts = text_file \
 print word_counts.collect()
 ```
 
-
-
 ## Docker
 
 The Docker images is available on Docker Hub. To pull the image, run:
 
 ```
-docker pull ramhiser/spark:2.0.1
+docker pull ramhiser/spark:2.1.0
 ```
 
 The image was build with the following:
 
 ```
 cd docker
-docker build -t ramhiser/spark:2.0.1 .
-docker push ramhiser/spark:2.0.1
+docker build -t ramhiser/spark:2.1.0 .
+docker push ramhiser/spark:2.1.0
 ```
 
 Plagiarized from
